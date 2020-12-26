@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Teste</title>
+<!-- Inicio dos métodos na tag head-->
+<script> 
+function gerar(){
+	 xCoordenadaQuadrado = new Array(10);
+	 yCoordenadaQuadrado = new Array(10);
+	 corQuadrado = new Array(10);
+	 
+	 xCoordenadaCirculo = new Array(10);
+	 yCoordenadaCirculo = new Array(10);
+	 corCirculo = new Array(10);
+	 
+	 xCoordenadaTriangulo = new Array(10);
+	 yCoordenadaTriangulo = new Array(10);
+	 corTriangulo = new Array(10);
+	 
+	 xCoordenadaRetangulo = new Array(10);
+	 yCoordenadaRetangulo = new Array(10);
+	 corRetangulo = new Array(10);
+	 
+	 listaOrdenadaXeixoX = new Array(10);
+	 listaOrdenadaYeixoX = new Array(10);
+	 listaOrdenadaCorEixoX = new Array(10);
+	 listaOrdenadaFormaEixoX = new Array(10);
+	 
+	 listaOrdenadaXeixoY = new Array(10);
+	 listaOrdenadaYeixoY = new Array(10);
+	 listaOrdenadaCorEixoY = new Array(10);
+	 listaOrdenadaFormaEixoY = new Array(10);	 
+
+	 
+	limparGrafico();
+	limparCoordenadas();
+	marcarCheckbox();
+	for(i=0;i<10;i++){
+		gerarCoordenadasECor(i);
+		if(i==9){
+		organizaEixoX();
+		organizaEixoY();
+		}		
+	}
+}
+</script>
+
+<script>
+function limparGrafico(){
+	var limpar=document.getElementById("Tela").getContext("2d");
+	limpar.clearRect(21, 0, 500, 499);
+} 
+</script>
+
+<script>
+function limparCoordenadas(){
+	var limpar=document.getElementById("Tela2").getContext("2d");
+	limpar.clearRect(0, 0,90,150);
+} 
+</script>
+
+<script>
+function marcarCheckbox(){
+	for(j=0;j<=document.getElementsByName("caixa").length-1;j++){
+		document.getElementsByName("caixa")[j].checked=true;
+	}
+}
+</script>
+
+<script>
+function gerarCoordenadasECor(i){
+	var x=0,y=0,cor=0;
+	x=30+Math.floor(Math.random()*410);
+	y=30+Math.floor(Math.random()*450);
+	cor=Math.floor(Math.random()*4);
+	cor=escolherCor(cor);
+	imprimeCoordenadas(x,y,i);
+	return escolherForma(x,y,cor);
+}
+</script>
+
+<script>
+//Essa deve ser a funcao para inserir coordenadas na tela
+function imprimeCoordenadas(x,y,i){
+x=x-10;
+y=Math.abs(y-525);
+	
+var listaCoordenadas=document.getElementById("Tela2").getContext("2d");
+	listaCoordenadas.font="15px Verdana";
+	listaCoordenadas.fillStyle="#000000";
+	listaCoordenadas.textAlign="left";
+	listaCoordenadas.textBaseline="top";	
+	listaCoordenadas.fillText("("+x.toString()+","+y.toString()+")",10,15*i);	
+}	
+</script>
+
+<script>
+function escolherForma(x,y,cor){
+	var forma;
+	forma=Math.floor(Math.random()*4);
+	listaEixoX(x,y,cor,forma);
+	listaEixoY(x,y,cor,forma);
+	if(forma==0){
+		return gerarQuadrado(x,y,cor);
+	}
+	if(forma==1){
+		return gerarCirculo(x,y,cor);
+	}
+	if(forma==2){
+		return gerarTriangulo(x,y,cor);
+	}
+	if(forma==3){
+		return gerarRetangulo(x,y,cor);
+	}
+}
+</script>
+
+<script>
+function escolherCor(cor){
+	if (cor==0){
+		return "blue";
+	}
+	if(cor==1){
+		return "red";
+	}
+	if(cor==2){
+		return "green";
+	}
+	if(cor==3){
+		return "orange";
+	}
+}
+</script>
+
+<script>
+function gerarCirculo(x,y,cor){
+armazenaCirculo(x,y,cor);
+
+	
+var circulo=document.getElementById("Tela").getContext("2d");
+circulo.fillStyle=cor;
+circulo.strokeStyle="black";
+circulo.beginPath();
+//eixo x,eixo y, raio, inicio circulo,fim circulo
+circulo.arc(x,y,10,0,Math.PI*2);
+//circulo.closePath()
+//circulo.stroke();
+circulo.fill();
+}
+</script>
+
+<script>
+function gerarQuadrado(x,y,cor){
+armazenaQuadrado(x,y,cor);
+	
+//cria elemento dentro do elemento canvas "tela" e define contexto 2d
+var quadrado=document.getElementById("Tela").getContext("2d");
+//preenchimento da cor
+quadrado.fillStyle=cor;
+//eixo x, eixo y, comprimento,altura
+quadrado.fillRect(x,y,20,20);
+}
+</script>
+
+<script>
+function gerarTriangulo(x,y,cor){
+armazenaTriangulo(x,y,cor);
+
+
+	
+var triangulo=document.getElementById("Tela").getContext("2d");
+triangulo.fillStyle=cor;
+triangulo.strokeStyle="#000000";
+triangulo.beginPath();
+//inicia o desenho no eixo x=200,y=140
+triangulo.moveTo(x,y);
+//faz um linha ate o proximo eixo x=300 y=140
+triangulo.lineTo(x+20,y);
+//faz outra linha ate o eixo x=250 y=10
+triangulo.lineTo(x+10,y-20);
+//triangulo.closePath();
+//triangulo.stroke();
+triangulo.fill();
+}
+</script>
+
+<script>
+function gerarRetangulo(x,y,cor){
+armazenaRetangulo(x,y,cor);
+
+
+
+	
+var retangulo=document.getElementById("Tela").getContext("2d");
+retangulo.fillStyle=cor;
+retangulo.fillRect(x,y,30,20);
+}
+</script>
+
+<script>
+function armazenaQuadrado(x,y,cor){
+	var i=0;
+	while(i<10){
+		if(xCoordenadaQuadrado[i]==null){
+			xCoordenadaQuadrado[i]=x;
+			yCoordenadaQuadrado[i]=y;
+			corQuadrado[i]=cor;
+			break;
+			}
+		i++;
+	}	
+}
+</script>
+
+<script>
+function armazenaCirculo(x,y,cor){
+	var i=0;
+	while(i<10){
+		if(xCoordenadaCirculo[i]==null){
+			xCoordenadaCirculo[i]=x;
+			yCoordenadaCirculo[i]=y;
+			corCirculo[i]=cor;
+			break;
+			}
+		i++;
+	}	
+}
+</script>
+
+<script>
+function armazenaTriangulo(x,y,cor){
+	var i=0;
+	while(i<10){
+		if(xCoordenadaTriangulo[i]==null){
+			xCoordenadaTriangulo[i]=x;
+			yCoordenadaTriangulo[i]=y;
+			corTriangulo[i]=cor;
+			break;
+			}
+		i++;
+	}	
+}
+</script>
+
+<script>
+function armazenaRetangulo(x,y,cor){
+	var i=0;
+	while(i<10){
+		if(xCoordenadaRetangulo[i]==null){
+			xCoordenadaRetangulo[i]=x;
+			yCoordenadaRetangulo[i]=y;
+			corRetangulo[i]=cor;
+			break;
+			}
+		i++;
+	}	
+}
+</script>
+
+<script>
+function ocultarQuadrado(){	
+	if(document.getElementsByName("caixa")[0].checked==true){
+		for(i=0;i<10;i++){
+			mostraQuadrado(i);}					
+	}
+	else{
+		for(i=0;i<10;i++){
+			ocultaQuadrado(i);}			
+	}
+}
+function mostraQuadrado(i){
+	var quadrado=document.getElementById("Tela").getContext("2d");
+	quadrado.fillStyle=corQuadrado[i];
+	quadrado.fillRect(xCoordenadaQuadrado[i],yCoordenadaQuadrado[i],20,20);
+}
+function ocultaQuadrado(i){
+	var quadrado=document.getElementById("Tela").getContext("2d");
+	quadrado.fillStyle="white";
+	quadrado.fillRect(xCoordenadaQuadrado[i],yCoordenadaQuadrado[i],20,20);
+}
+</script>
+
+
+<script>
+function ocultarCirculo(){
+	if(document.getElementsByName("caixa")[3].checked==true){
+		for(i=0;i<10;i++){
+			mostraCirculo(i);}					
+	}
+	else{
+		for(i=0;i<10;i++){
+			ocultaCirculo(i);}			
+	}
+}
+function mostraCirculo(i){
+	var circulo=document.getElementById("Tela").getContext("2d");
+	circulo.fillStyle=corCirculo[i];
+	circulo.strokeStyle="black";
+	circulo.beginPath();
+	circulo.arc(xCoordenadaCirculo[i],yCoordenadaCirculo[i],10,0,Math.PI*2);
+	//circulo.closePath()
+	//circulo.stroke();
+	circulo.fill();
+}
+function ocultaCirculo(i){
+	var circulo=document.getElementById("Tela").getContext("2d");
+	circulo.fillStyle="white";
+	circulo.strokeStyle="white";
+	circulo.beginPath();
+	//eixo x,eixo y, raio, inicio circulo,fim circulo
+	circulo.arc(xCoordenadaCirculo[i],yCoordenadaCirculo[i],10,0,Math.PI*2);
+	//circulo.closePath()
+	circulo.stroke();
+	circulo.fill();
+}
+</script>
+
+<script>
+function ocultarTriangulo(){	
+	if(document.getElementsByName("caixa")[1].checked==true){
+		for(i=0;i<10;i++){
+			mostraTriangulo(i);}					
+	}
+	else{
+		for(i=0;i<10;i++){
+			ocultaTriangulo(i);}			
+	}
+}
+function mostraTriangulo(i){
+	var triangulo=document.getElementById("Tela").getContext("2d");
+	triangulo.fillStyle=corTriangulo[i];
+	triangulo.strokeStyle="#000000";
+	triangulo.beginPath();
+	//inicia o desenho no eixo x=200,y=140
+	triangulo.moveTo(xCoordenadaTriangulo[i],yCoordenadaTriangulo[i]);
+	//faz um linha ate o proximo eixo x=300 y=140
+	triangulo.lineTo(xCoordenadaTriangulo[i]+20,yCoordenadaTriangulo[i]);
+	//faz outra linha ate o eixo x=250 y=10
+	triangulo.lineTo(xCoordenadaTriangulo[i]+10,yCoordenadaTriangulo[i]-20);
+	//triangulo.closePath();
+	//triangulo.stroke();
+	triangulo.fill();
+}
+function ocultaTriangulo(i){
+	var triangulo=document.getElementById("Tela").getContext("2d");
+	triangulo.fillStyle="white";
+	triangulo.strokeStyle="white";
+	triangulo.beginPath();
+	//inicia o desenho no eixo x=200,y=140
+	triangulo.moveTo(xCoordenadaTriangulo[i],yCoordenadaTriangulo[i]);
+	//faz um linha ate o proximo eixo x=300 y=140
+	triangulo.lineTo(xCoordenadaTriangulo[i]+20,yCoordenadaTriangulo[i]);
+	//faz outra linha ate o eixo x=250 y=10
+	triangulo.lineTo(xCoordenadaTriangulo[i]+10,yCoordenadaTriangulo[i]-20);
+	triangulo.closePath();
+	triangulo.stroke();
+	triangulo.fill();
+}
+</script>
+
+<script>
+function ocultarRetangulo(){	
+	if(document.getElementsByName("caixa")[2].checked==true){
+		for(i=0;i<10;i++){
+			mostraRetangulo(i);}					
+	}
+	else{
+		for(i=0;i<10;i++){
+			ocultaRetangulo(i);}			
+	}
+}
+function mostraRetangulo(i){
+	var retangulo=document.getElementById("Tela").getContext("2d");
+	retangulo.fillStyle=corRetangulo[i];
+	retangulo.fillRect(xCoordenadaRetangulo[i],yCoordenadaRetangulo[i],30,20);
+}
+function ocultaRetangulo(i){
+	var retangulo=document.getElementById("Tela").getContext("2d");
+	retangulo.fillStyle="white";
+	retangulo.fillRect(xCoordenadaRetangulo[i],yCoordenadaRetangulo[i],30,20);
+}
+</script>
+
+<script>
+function ocultarAzul(){
+	if(document.getElementsByName("caixa")[4].checked==true){
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="blue"){
+			mostraQuadrado(i);
+			}
+			if(corCirculo[i]=="blue"){
+				mostraCirculo(i);
+			}
+			if(corTriangulo[i]=="blue"){
+				mostraTriangulo(i);
+			}
+			if(corRetangulo[i]=="blue"){
+				mostraRetangulo(i);
+			}
+		}
+	}
+	else{
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="blue"){
+				ocultaQuadrado(i);
+			}
+			if(corCirculo[i]=="blue"){
+				ocultaCirculo(i);
+			}
+			if(corTriangulo[i]=="blue"){
+				ocultaTriangulo(i);
+			}
+			if(corRetangulo[i]=="blue"){
+				ocultaRetangulo(i);
+			}
+		}
+	}
+}
+</script>
+
+<script>
+function ocultarVerde(){
+	if(document.getElementsByName("caixa")[5].checked==true){
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="green"){
+			mostraQuadrado(i);
+			}
+			if(corCirculo[i]=="green"){
+				mostraCirculo(i);
+			}
+			if(corTriangulo[i]=="green"){
+				mostraTriangulo(i);
+			}
+			if(corRetangulo[i]=="green"){
+				mostraRetangulo(i);
+			}
+		}
+	}
+	else{
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="green"){
+				ocultaQuadrado(i);
+			}
+			if(corCirculo[i]=="green"){
+				ocultaCirculo(i);
+			}
+			if(corTriangulo[i]=="green"){
+				ocultaTriangulo(i);
+			}
+			if(corRetangulo[i]=="green"){
+				ocultaRetangulo(i);
+			}
+		}
+	}
+}
+</script>
+
+<script>
+function ocultarVermelho(){
+	if(document.getElementsByName("caixa")[6].checked==true){
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="red"){
+			mostraQuadrado(i);
+			}
+			if(corCirculo[i]=="red"){
+				mostraCirculo(i);
+			}
+			if(corTriangulo[i]=="red"){
+				mostraTriangulo(i);
+			}
+			if(corRetangulo[i]=="red"){
+				mostraRetangulo(i);
+			}
+		}
+	}
+	else{
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="red"){
+				ocultaQuadrado(i);
+			}
+			if(corCirculo[i]=="red"){
+				ocultaCirculo(i);
+			}
+			if(corTriangulo[i]=="red"){
+				ocultaTriangulo(i);
+			}
+			if(corRetangulo[i]=="red"){
+				ocultaRetangulo(i);
+			}
+		}
+	}
+}
+</script>
+
+<script>
+function ocultarLaranja(){
+	if(document.getElementsByName("caixa")[7].checked==true){
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="orange"){
+			mostraQuadrado(i);
+			}
+			if(corCirculo[i]=="orange"){
+				mostraCirculo(i);
+			}
+			if(corTriangulo[i]=="orange"){
+				mostraTriangulo(i);
+			}
+			if(corRetangulo[i]=="orange"){
+				mostraRetangulo(i);
+			}
+		}
+	}
+	else{
+		for(i=0;i<10;i++){
+			if(corQuadrado[i]=="orange"){
+				ocultaQuadrado(i);
+			}
+			if(corCirculo[i]=="orange"){
+				ocultaCirculo(i);
+			}
+			if(corTriangulo[i]=="orange"){
+				ocultaTriangulo(i);
+			}
+			if(corRetangulo[i]=="orange"){
+				ocultaRetangulo(i);
+			}
+		}
+	}
+}
+</script>
+
+ 
+<script>
+function listaEixoX(x,y,cor,forma){
+	for(i=0;i<10;i++){
+		if(listaOrdenadaXeixoX[i]==null){
+			listaOrdenadaXeixoX[i]=x;
+			listaOrdenadaYeixoX[i]=y;
+			listaOrdenadaCorEixoX[i]=cor;
+			listaOrdenadaFormaEixoX[i]=forma;
+			break;
+		}
+	}
+}
+</script>
+
+<script>
+function organizaEixoX(){
+ var j=9;
+ var tempX=0;
+ var tempY=0;
+ var tempCor=0;
+ var tempForma=0;
+ 
+ while(j>=0){
+	 for(i=0;i<10;i++){
+			 if(listaOrdenadaXeixoX[i]>listaOrdenadaXeixoX[i+1]){
+				 tempX=listaOrdenadaXeixoX[i];
+				 tempY=listaOrdenadaYeixoX[i];
+				 tempCor=listaOrdenadaCorEixoX[i];
+				 tempForma=listaOrdenadaFormaEixoX[i];
+				
+				 listaOrdenadaXeixoX[i]=listaOrdenadaXeixoX[i+1];
+				 listaOrdenadaYeixoX[i]=listaOrdenadaYeixoX[i+1];
+				 listaOrdenadaCorEixoX[i]=listaOrdenadaCorEixoX[i+1];
+				 listaOrdenadaFormaEixoX[i]=listaOrdenadaFormaEixoX[i+1];
+				
+				 listaOrdenadaXeixoX[i+1]=tempX;
+				 listaOrdenadaYeixoX[i+1]=tempY;
+				 listaOrdenadaCorEixoX[i+1]=tempCor;
+				 listaOrdenadaFormaEixoX[i+1]=tempForma;
+			 }
+	 }
+  j--;
+ }
+}
+</script>
+
+<script>
+var valorAtualX=-1;
+function sliderX(valor){
+	if(valor>=valorAtualX){
+		for(i=0;i<=valor;i++){
+			ocultaEixoX(i);
+		}
+		valorAtualX=valor;
+
+	}
+	if(valor<valorAtualX){
+		for(i=valorAtualX;i>valor;i--){
+			mostraEixoX(i);
+		}
+		valorAtualX=valor;
+
+	}
+	
+}
+
+function mostraEixoX(i){
+	if(listaOrdenadaFormaEixoX[i]==0){
+	var quadrado=document.getElementById("Tela").getContext("2d");
+	quadrado.fillStyle=listaOrdenadaCorEixoX[i];
+	quadrado.fillRect(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i],20,20);
+	}
+	if(listaOrdenadaFormaEixoX[i]==1){
+		var circulo=document.getElementById("Tela").getContext("2d");
+		circulo.fillStyle=listaOrdenadaCorEixoX[i];
+		circulo.strokeStyle="black";
+		circulo.beginPath();
+		circulo.arc(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i],10,0,Math.PI*2);
+		circulo.fill();
+	}
+	if(listaOrdenadaFormaEixoX[i]==2){
+		var triangulo=document.getElementById("Tela").getContext("2d");
+		triangulo.fillStyle=listaOrdenadaCorEixoX[i];
+		triangulo.strokeStyle="#000000";
+		triangulo.beginPath();
+		triangulo.moveTo(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i]);
+		triangulo.lineTo(listaOrdenadaXeixoX[i]+20,listaOrdenadaYeixoX[i]);
+		triangulo.lineTo(listaOrdenadaXeixoX[i]+10,listaOrdenadaYeixoX[i]-20);
+		triangulo.fill();	
+	}
+	if(listaOrdenadaFormaEixoX[i]==3){
+		var retangulo=document.getElementById("Tela").getContext("2d");
+		retangulo.fillStyle=listaOrdenadaCorEixoX[i];
+		retangulo.fillRect(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i],30,20);		
+	}
+}
+
+function ocultaEixoX(i){
+	if(listaOrdenadaFormaEixoX[i]==0){
+	var quadrado=document.getElementById("Tela").getContext("2d");
+	quadrado.fillStyle="white";
+	quadrado.fillRect(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i],20,20);
+	}
+	if(listaOrdenadaFormaEixoX[i]==1){
+		var circulo=document.getElementById("Tela").getContext("2d");
+		circulo.fillStyle="white";
+		circulo.strokeStyle="white";
+		circulo.beginPath();
+		circulo.arc(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i],10,0,Math.PI*2);
+		circulo.fill();
+	}
+	if(listaOrdenadaFormaEixoX[i]==2){
+		var triangulo=document.getElementById("Tela").getContext("2d");
+		triangulo.fillStyle="white";
+		triangulo.strokeStyle="white";
+		triangulo.beginPath();
+		triangulo.moveTo(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i]);
+		triangulo.lineTo(listaOrdenadaXeixoX[i]+20,listaOrdenadaYeixoX[i]);
+		triangulo.lineTo(listaOrdenadaXeixoX[i]+10,listaOrdenadaYeixoX[i]-20);
+		triangulo.fill();	
+	}
+	if(listaOrdenadaFormaEixoX[i]==3){
+		var retangulo=document.getElementById("Tela").getContext("2d");
+		retangulo.fillStyle="white";
+		retangulo.fillRect(listaOrdenadaXeixoX[i],listaOrdenadaYeixoX[i],30,20);		
+	}
+}
+</script>
+
+<script>
+function listaEixoY(x,y,cor,forma){
+	for(i=0;i<10;i++){
+		if(listaOrdenadaYeixoY[i]==null){
+			listaOrdenadaXeixoY[i]=x;
+			listaOrdenadaYeixoY[i]=y;
+			listaOrdenadaCorEixoY[i]=cor;
+			listaOrdenadaFormaEixoY[i]=forma;
+			break;
+		}
+	}
+}
+</script>
+
+<script>
+function organizaEixoY(){
+ var j=9;
+ var tempX=0;
+ var tempY=0;
+ var tempCor=0;
+ var tempForma=0;
+ 
+ while(j>=0){
+	 for(i=0;i<10;i++){
+			 if(listaOrdenadaYeixoY[i]<listaOrdenadaYeixoY[i+1]){
+				 tempX=listaOrdenadaXeixoY[i];
+				 tempY=listaOrdenadaYeixoY[i];
+				 tempCor=listaOrdenadaCorEixoY[i];
+				 tempForma=listaOrdenadaFormaEixoY[i];
+				
+				 listaOrdenadaXeixoY[i]=listaOrdenadaXeixoY[i+1];
+				 listaOrdenadaYeixoY[i]=listaOrdenadaYeixoY[i+1];
+				 listaOrdenadaCorEixoY[i]=listaOrdenadaCorEixoY[i+1];
+				 listaOrdenadaFormaEixoY[i]=listaOrdenadaFormaEixoY[i+1];
+				
+				 listaOrdenadaXeixoY[i+1]=tempX;
+				 listaOrdenadaYeixoY[i+1]=tempY;
+				 listaOrdenadaCorEixoY[i+1]=tempCor;
+				 listaOrdenadaFormaEixoY[i+1]=tempForma;
+			 }
+	 }
+  j--;
+ }
+}
+</script>
+
+<script>
+var valorAtualY=-1;
+function sliderY(valor){
+	if(valor>=valorAtualY){
+		for(i=0;i<=valor;i++){
+			ocultaEixoY(i);
+		}
+		valorAtualY=valor;
+
+	}
+	if(valor<valorAtualY){
+		for(i=valorAtualY;i>valor;i--){
+			mostraEixoY(i);
+		}
+		valorAtualY=valor;
+
+	}
+	
+}
+
+function mostraEixoY(i){
+	if(listaOrdenadaFormaEixoY[i]==0){
+	var quadrado=document.getElementById("Tela").getContext("2d");
+	quadrado.fillStyle=listaOrdenadaCorEixoY[i];
+	quadrado.fillRect(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i],20,20);
+	}
+	if(listaOrdenadaFormaEixoY[i]==1){
+		var circulo=document.getElementById("Tela").getContext("2d");
+		circulo.fillStyle=listaOrdenadaCorEixoY[i];
+		circulo.strokeStyle="black";
+		circulo.beginPath();
+		circulo.arc(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i],10,0,Math.PI*2);
+		circulo.fill();
+	}
+	if(listaOrdenadaFormaEixoY[i]==2){
+		var triangulo=document.getElementById("Tela").getContext("2d");
+		triangulo.fillStyle=listaOrdenadaCorEixoY[i];
+		triangulo.strokeStyle="#000000";
+		triangulo.beginPath();
+		triangulo.moveTo(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i]);
+		triangulo.lineTo(listaOrdenadaXeixoY[i]+20,listaOrdenadaYeixoY[i]);
+		triangulo.lineTo(listaOrdenadaXeixoY[i]+10,listaOrdenadaYeixoY[i]-20);
+		triangulo.fill();	
+	}
+	if(listaOrdenadaFormaEixoY[i]==3){
+		var retangulo=document.getElementById("Tela").getContext("2d");
+		retangulo.fillStyle=listaOrdenadaCorEixoY[i];
+		retangulo.fillRect(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i],30,20);		
+	}
+}
+
+function ocultaEixoY(i){
+	if(listaOrdenadaFormaEixoY[i]==0){
+	var quadrado=document.getElementById("Tela").getContext("2d");
+	quadrado.fillStyle="white";
+	quadrado.fillRect(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i],20,20);
+	}
+	if(listaOrdenadaFormaEixoY[i]==1){
+		var circulo=document.getElementById("Tela").getContext("2d");
+		circulo.fillStyle="white";
+		circulo.strokeStyle="white";
+		circulo.beginPath();
+		circulo.arc(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i],10,0,Math.PI*2);
+		circulo.fill();
+	}
+	if(listaOrdenadaFormaEixoY[i]==2){
+		var triangulo=document.getElementById("Tela").getContext("2d");
+		triangulo.fillStyle="white";
+		triangulo.strokeStyle="white";
+		triangulo.beginPath();
+		triangulo.moveTo(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i]);
+		triangulo.lineTo(listaOrdenadaXeixoY[i]+20,listaOrdenadaYeixoY[i]);
+		triangulo.lineTo(listaOrdenadaXeixoY[i]+10,listaOrdenadaYeixoY[i]-20);
+		triangulo.fill();	
+	}
+	if(listaOrdenadaFormaEixoY[i]==3){
+		var retangulo=document.getElementById("Tela").getContext("2d");
+		retangulo.fillStyle="white";
+		retangulo.fillRect(listaOrdenadaXeixoY[i],listaOrdenadaYeixoY[i],30,20);		
+	}
+}
+</script>
+
+
+<!-- Fim dos métodos na tag head-->
+</head>
+<body>
+
+
+
+<table>
+ <tr valign="top"><td><canvas id="Tela" width="520" height="520" style="border:1px solid #000000;"></canvas></td>
+                  <td>
+  <table>
+   <tr><td align="center" valign="top"><canvas  id="Tela2"  width="90" height="150" style="border:1px solid #000000;"></canvas></td></tr>
+   <tr><td align="center" ><input name="Botao1 " type = "BUTTON" OnClick="gerar()" value="Gerar" /></td></tr>
+   <tr><td><table border="1">
+   <tr><td align="center">Filtro por Formas</td></tr>
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarQuadrado();">Quadrado</td></tr>
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarTriangulo();">Triângulo</td></tr>
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarRetangulo();">Retângulo</td></tr>
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarCirculo();">Círculo</td></tr>
+           </table>
+        </td>
+   </tr> 
+   <tr><td></td></tr>
+   <tr><td><table border="1">
+   <tr><td align="center">Filtro por Cores</td></tr>   
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarAzul();">Azul</td></tr>   
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarVerde();">Verde</td></tr>  
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarVermelho();">Vermelho</td></tr>      
+   <tr><td><input type="checkbox" name="caixa" onClick="ocultarLaranja();">Laranja</td></tr>      
+          </table>
+       </td>
+  </tr>
+  </table>
+                 </td>
+ </tr>
+</table>
+
+<script>
+var eixoX=document.getElementById("Tela").getContext("2d");
+eixoX.strokeStyle="#00000";
+eixoX.beginPath();
+eixoX.moveTo(20,500);
+eixoX.lineTo(500,500);
+eixoX.closePath();
+eixoX.stroke();
+</script>
+
+
+<script> 
+var eixoY=document.getElementById("Tela").getContext("2d");
+eixoY.strokeStyle="#00000";
+eixoY.beginPath();
+eixoY.moveTo(20,20);
+eixoY.lineTo(20,500);
+eixoY.closePath();
+eixoY.stroke();
+</script>
+
+<script>
+var coordenadaX=document.getElementById("Tela").getContext("2d");
+coordenadaX.font="12px Verdana";
+coordenadaX.fillStyle="#000000";
+coordenadaX.fillText("500",490,512);
+</script>
+
+<script>
+var coordenadaY=document.getElementById("Tela").getContext("2d");
+coordenadaY.font="12px Verdana";
+coordenadaY.fillStyle="#000000";
+coordenadaY.fillText("500",0,15);
+</script>
+
+<script>
+var coordenadaZero=document.getElementById("Tela").getContext("2d");
+coordenadaZero.font="12px Verdana";
+coordenadaZero.fillStyle="#000000";
+coordenadaZero.fillText("0",10,510);
+</script>
+
+
+
+<label for="range">Eixo X: </label>
+0<input type="range" name="slide" id="slide" min="-1" max="9" value="-1" onMouseMove="sliderX(value);" onChange="sliderX(value);">500
+ 
+ <p></p>
+ 
+<label for="range">Eixo Y: </label> 
+0<input type="range" name="slide" id="slide" min="-1" max="9" value="-1" onMouseMove="sliderY(value);" onChange="sliderY(value);">500
+ 
+
+
+</body>
+</html>
