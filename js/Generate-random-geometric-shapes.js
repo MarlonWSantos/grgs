@@ -34,7 +34,7 @@ function loadArrays(){
 
 function drawAxis(axis,beginLineOnX,beginLineOnY,endLineOnX,endLineOnY){
 	var axis=document.getElementById("screenForms").getContext("2d");
-	axis.strokeStyle="#00000";
+	axis.strokeStyle="black";
 	axis.beginPath();
 	axis.moveTo(beginLineOnX,beginLineOnY);
 	axis.lineTo(endLineOnX,endLineOnY);
