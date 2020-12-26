@@ -4,31 +4,32 @@ function init(){
 }
 
 function loadArrays(){
-	xCoordinateSquare = new Array(10);
-	yCoordinateSquare = new Array(10);
-	colorSquare = new Array(10);
+	size=10;
+	xCoordinateSquare = new Array(size);
+	yCoordinateSquare = new Array(size);
+	colorSquare = new Array(size);
 
-	xCoordinateCircle = new Array(10);
-	yCoordinateCircle = new Array(10);
-	colorCircle = new Array(10);
+	xCoordinateCircle = new Array(size);
+	yCoordinateCircle = new Array(size);
+	colorCircle = new Array(size);
 
-	xCoordinateTriangle = new Array(10);
-	yCoordinateTriangle = new Array(10);
-	colorTriangle = new Array(10);
+	xCoordinateTriangle = new Array(size);
+	yCoordinateTriangle = new Array(size);
+	colorTriangle = new Array(size);
 
-	xCoordinateRectangle = new Array(10);
-	yCoordinateRectangle = new Array(10);
-	colorRectangle = new Array(10);
+	xCoordinateRectangle = new Array(size);
+	yCoordinateRectangle = new Array(size);
+	colorRectangle = new Array(size);
 
-	listOrderedXAxisX = new Array(10);
-	listOrderedYAxisX = new Array(10);
-	listOrderedColorAxisX = new Array(10);
-	listOrderedFormAxisX = new Array(10);
+	listOrderedXAxisX = new Array(size);
+	listOrderedYAxisX = new Array(size);
+	listOrderedColorAxisX = new Array(size);
+	listOrderedFormAxisX = new Array(size);
 
-	listOrderedXAxisY = new Array(10);
-	listOrderedYAxisY = new Array(10);
-	listOrderedColorAxisY = new Array(10);
-	listOrderedFormAxisY = new Array(10);	 
+	listOrderedXAxisY = new Array(size);
+	listOrderedYAxisY = new Array(size);
+	listOrderedColorAxisY = new Array(size);
+	listOrderedFormAxisY = new Array(size);	 
 }
 
 function drawAxis(axis,beginLineOnX,beginLineOnY,endLineOnX,endLineOnY){
@@ -66,9 +67,9 @@ function start(){
 	loadScreen();
 	selectCheckbox(true);
 
-	for(i=0;i<10;i++){
+	for(i=0;i<size;i++){
 		generateCoordinatesAndColor(i);
-		if(i==9){
+		if(i==size-1){
 			orderAxisX();
 			orderAxisY();
 		}		
@@ -121,15 +122,19 @@ function chooseForm(x,y,color){
 	listAxisX(x,y,color,form);
 	listAxisY(x,y,color,form);
 	if(form==0){
+		storesSquare(x,y,color);
 		return generateSquare(x,y,color);
 	}
 	if(form==1){
-		return generateCircle(x,y,color);
+		storesCircle(x,y,color);
+		return generateCircle(x,y,color,color);
 	}
 	if(form==2){
-		return generateTriangle(x,y,color);
+		storesTriangle(x,y,color);
+		return generateTriangle(x,y,color,color);
 	}
 	if(form==3){
+		storesRectangle(x,y,color);
 		return generateRectangle(x,y,color);
 	}
 }
@@ -149,22 +154,25 @@ function chooseColor(color){
 	}
 }
 
-function generateCircle(x,y,color){
-	storesCircle(x,y,color);
+function generateCircle(x,y,color,stroke){
 	
 	var circle=document.getElementById("screenForms").getContext("2d");
+	
+	circle.beginPath();
+	circle.clearRect(x - 10 - 1, y - 10 - 1, 10 * 2 + 2, 10 * 2 + 2);
+	circle.closePath();
+	
 	circle.fillStyle=color;
-	circle.strokeStyle="black";
+	circle.strokeStyle=stroke;
 	circle.beginPath();
 	//eixo x,eixo y, raio, inicio circulo,fim circulo
 	circle.arc(x,y,10,0,Math.PI*2);
-	//circulo.closePath()
-	//circulo.stroke();
+	circle.closePath()
+	circle.stroke();
 	circle.fill();
 }
 
 function generateSquare(x,y,color){
-	storesSquare(x,y,color);
 
 	//cria elemento dentro do elemento canvas "tela" e define contexto 2d
 	var square=document.getElementById("screenForms").getContext("2d");
@@ -174,12 +182,17 @@ function generateSquare(x,y,color){
 	square.fillRect(x,y,20,20);
 }
 
-function generateTriangle(x,y,color){
-	storesTriangle(x,y,color);
+function generateTriangle(x,y,color,stroke){
+	
 
 	var triangle=document.getElementById("screenForms").getContext("2d");
+	
+	triangle.beginPath();
+	triangle.clearRect(x-1,y-21,22,22);
+	triangle.closePath();
+	
 	triangle.fillStyle=color;
-	triangle.strokeStyle="#000000";
+	triangle.strokeStyle=stroke;
 	triangle.beginPath();
 	//inicia o desenho no eixo x=200,y=140
 	triangle.moveTo(x,y);
@@ -187,13 +200,12 @@ function generateTriangle(x,y,color){
 	triangle.lineTo(x+20,y);
 	//faz outra linha ate o eixo x=250 y=10
 	triangle.lineTo(x+10,y-20);
-	//triangulo.closePath();
-	//triangulo.stroke();
-	triangle.fill();
+	triangle.closePath();
+	triangle.stroke();
+	triangle.fill();	
 }
 
 function generateRectangle(x,y,color){
-	storesRectangle(x,y,color);
 
 	var rectangle=document.getElementById("screenForms").getContext("2d");
 	rectangle.fillStyle=color;
@@ -202,7 +214,7 @@ function generateRectangle(x,y,color){
 
 function storesSquare(x,y,color){
 	var i=0;
-	while(i<10){
+	while(i<size){
 		if(xCoordinateSquare[i]==null){
 			xCoordinateSquare[i]=x;
 			yCoordinateSquare[i]=y;
@@ -215,7 +227,7 @@ function storesSquare(x,y,color){
 
 function storesCircle(x,y,color){
 	var i=0;
-	while(i<10){
+	while(i<size){
 		if(xCoordinateCircle[i]==null){
 			xCoordinateCircle[i]=x;
 			yCoordinateCircle[i]=y;
@@ -228,7 +240,7 @@ function storesCircle(x,y,color){
 
 function storesTriangle(x,y,color){
 	var i=0;
-	while(i<10){
+	while(i<size){
 		if(xCoordinateTriangle[i]==null){
 			xCoordinateTriangle[i]=x;
 			yCoordinateTriangle[i]=y;
@@ -241,7 +253,7 @@ function storesTriangle(x,y,color){
 
 function storesRectangle(x,y,color){
 	var i=0;
-	while(i<10){
+	while(i<size){
 		if(xCoordinateRectangle[i]==null){
 			xCoordinateRectangle[i]=x;
 			yCoordinateRectangle[i]=y;
@@ -252,17 +264,17 @@ function storesRectangle(x,y,color){
 	}	
 }
 
-function hideSquare(){	
+function showOrHideSquare(){	
 	if(document.getElementsByName("checkboxForms")[0].checked==true){
-		for(i=0;i<10;i++){
-			showOrHideSquare(i,false);}					
+		for(i=0;i<size;i++){
+			hideSquare(i,false);}					
 	}
 	else{
-		for(i=0;i<10;i++){
-			showOrHideSquare(i,true);}			
+		for(i=0;i<size;i++){
+			hideSquare(i,true);}			
 	}
 }
-function showOrHideSquare(i,hide){
+function hideSquare(i,hide){
 	var fill;
 	if(hide==true){
 		fill="white";
@@ -270,22 +282,20 @@ function showOrHideSquare(i,hide){
 		fill=colorSquare[i];
 
 	}
-	var quadrado=document.getElementById("screenForms").getContext("2d");
-	quadrado.fillStyle=fill;
-	quadrado.fillRect(xCoordinateSquare[i],yCoordinateSquare[i],20,20);
+	generateSquare(xCoordinateSquare[i],yCoordinateSquare[i],fill);
 }
 
-function hideRectangle(){	
+function showOrHideRectangle(){	
 	if(document.getElementsByName("checkboxForms")[2].checked==true){
-		for(i=0;i<10;i++){
-			showOrHideRectangle(i,false);}					
+		for(i=0;i<size;i++){
+			hideRectangle(i,false);}					
 	}
 	else{
-		for(i=0;i<10;i++){
-			showOrHideRectangle(i,true);}			
+		for(i=0;i<size;i++){
+			hideRectangle(i,true);}			
 	}
 }
-function showOrHideRectangle(i,hide){
+function hideRectangle(i,hide){
 	var fill;
 	if(hide==true){
 		fill="white";
@@ -293,221 +303,197 @@ function showOrHideRectangle(i,hide){
 		fill=colorRectangle[i];
 
 	}
-	var retangulo=document.getElementById("screenForms").getContext("2d");
-	retangulo.fillStyle=fill;
-	retangulo.fillRect(xCoordinateRectangle[i],yCoordinateRectangle[i],30,20);
+	generateRectangle(xCoordinateRectangle[i],yCoordinateRectangle[i], fill);
 }
 
-function hideCircle(){
+function showOrHideCircle(){
 	if(document.getElementsByName("checkboxForms")[3].checked==true){
-		for(i=0;i<10;i++){
-			showOrHideCircle(i,false);}					
+		for(i=0;i<size;i++){
+			hideCircle(i,false);}					
 	}
 	else{
-		for(i=0;i<10;i++){
-			showOrHideCircle(i,true);}			
+		for(i=0;i<size;i++){
+			hideCircle(i,true);}			
 	}
 }
-function showOrHideCircle(i,hide){
+function hideCircle(i,hide){
 	var fill,stroke;
 	if(hide==true){
 		fill="white";
 		stroke="white";
 	}else{
 		fill=colorCircle[i];
-		stroke="black";
+		stroke=colorCircle[i];
 	}
-	var circulo=document.getElementById("screenForms").getContext("2d");
-	circulo.fillStyle=fill;
-	circulo.strokeStyle=stroke;
-	circulo.beginPath();
-	circulo.arc(xCoordinateCircle[i],yCoordinateCircle[i],10,0,Math.PI*2);
-	circulo.closePath()
-	circulo.stroke();
-	circulo.fill();
+	generateCircle(xCoordinateCircle[i],yCoordinateCircle[i], fill, stroke)
 }
 
 
-function hideTriangle(){	
+function showOrHideTriangle(){	
 	if(document.getElementsByName("checkboxForms")[1].checked==true){
-		for(i=0;i<10;i++){
-			showOrHideTriangle(i,false);}					
+		for(i=0;i<size;i++){
+			hideTriangle(i,false);}					
 	}
 	else{
-		for(i=0;i<10;i++){
-			showOrHideTriangle(i,true);}			
+		for(i=0;i<size;i++){
+			hideTriangle(i,true);}			
 	}
 }
 
-function showOrHideTriangle(i,hide){
+function hideTriangle(i,hide){
 	var fill,stroke;
 	if(hide==true){
 		fill="white";
 		stroke="white";
 	}else{
 		fill=colorTriangle[i];
-		stroke="#000000";
+		stroke=colorTriangle[i];
 	}
-	var triangulo=document.getElementById("screenForms").getContext("2d");
-	triangulo.fillStyle=fill;
-	triangulo.strokeStyle=stroke;
-	triangulo.beginPath();
-	//inicia o desenho no eixo x=200,y=140
-	triangulo.moveTo(xCoordinateTriangle[i],yCoordinateTriangle[i]);
-	//faz um linha ate o proximo eixo x=300 y=140
-	triangulo.lineTo(xCoordinateTriangle[i]+20,yCoordinateTriangle[i]);
-	//faz outra linha ate o eixo x=250 y=10
-	triangulo.lineTo(xCoordinateTriangle[i]+10,yCoordinateTriangle[i]-20);
-	triangulo.closePath();
-	triangulo.stroke();
-	triangulo.fill();
+	generateTriangle(xCoordinateTriangle[i],yCoordinateTriangle[i], fill, stroke);
 }
 
-/*---------------------------------------------------------------------------------*/
-
-function hideBlue(){
+function showOrHideBlue(){
 	if(document.getElementsByName("checkboxColor")[0].checked==true){
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="blue"){
-				showOrHideSquare(i,false);
+				hideSquare(i,false);
 			}
 			if(colorCircle[i]=="blue"){
-				showOrHideCircle(i,false);
+				hideCircle(i,false);
 			}
 			if(colorTriangle[i]=="blue"){
-				showOrHideTriangle(i,false);
+				hideTriangle(i,false);
 			}
 			if(colorRectangle[i]=="blue"){
-				showOrHideRectangle(i,false);
+				hideRectangle(i,false);
 			}
 		}
 	}
 	else{
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="blue"){
-				showOrHideSquare(i,true);
+				hideSquare(i,true);
 			}
 			if(colorCircle[i]=="blue"){
-				showOrHideCircle(i,true);
+				hideCircle(i,true);
 			}
 			if(colorTriangle[i]=="blue"){
-				showOrHideTriangle(i,true);
+				hideTriangle(i,true);
 			}
 			if(colorRectangle[i]=="blue"){
-				showOrHideRectangle(i,true);
+				hideRectangle(i,true);
 			}
 		}
 	}
 }
 
-function hideGreen(){
+function showOrHideGreen(){
 	if(document.getElementsByName("checkboxColor")[1].checked==true){
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="green"){
-				showOrHideSquare(i,false);
+				hideSquare(i,false);
 			}
 			if(colorCircle[i]=="green"){
-				showOrHideCircle(i,false);
+				hideCircle(i,false);
 			}
 			if(colorTriangle[i]=="green"){
-				showOrHideTriangle(i,false);
+				hideTriangle(i,false);
 			}
 			if(colorRectangle[i]=="green"){
-				showOrHideRectangle(i,false);
+				hideRectangle(i,false);
 			}
 		}
 	}
 	else{
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="green"){
-				showOrHideSquare(i,true);
+				hideSquare(i,true);
 			}
 			if(colorCircle[i]=="green"){
-				showOrHideCircle(i,true);
+				hideCircle(i,true);
 			}
 			if(colorTriangle[i]=="green"){
-				showOrHideTriangle(i,true);
+				hideTriangle(i,true);
 			}
 			if(colorRectangle[i]=="green"){
-				showOrHideRectangle(i,true);
+				hideRectangle(i,true);
 			}
 		}
 	}
 }
 
-function hideRed(){
+function showOrHideRed(){
 	if(document.getElementsByName("checkboxColor")[2].checked==true){
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="red"){
-				showOrHideSquare(i,false);
+				hideSquare(i,false);
 			}
 			if(colorCircle[i]=="red"){
-				showOrHideCircle(i,false);
+				hideCircle(i,false);
 			}
 			if(colorTriangle[i]=="red"){
-				showOrHideTriangle(i,false);
+				hideTriangle(i,false);
 			}
 			if(colorRectangle[i]=="red"){
-				showOrHideRectangle(i,false);
+				hideRectangle(i,false);
 			}
 		}
 	}
 	else{
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="red"){
-				showOrHideSquare(i,true);
+				hideSquare(i,true);
 			}
 			if(colorCircle[i]=="red"){
-				showOrHideCircle(i,true);
+				hideCircle(i,true);
 			}
 			if(colorTriangle[i]=="red"){
-				showOrHideTriangle(i,true);
+				hideTriangle(i,true);
 			}
 			if(colorRectangle[i]=="red"){
-				showOrHideRectangle(i,true);
+				hideRectangle(i,true);
 			}
 		}
 	}
 }
 
-function hideOrange(){
+function showOrHideOrange(){
 	if(document.getElementsByName("checkboxColor")[3].checked==true){
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="orange"){
-				showOrHideSquare(i,false);
+				hideSquare(i,false);
 			}
 			if(colorCircle[i]=="orange"){
-				showOrHideCircle(i,false);
+				hideCircle(i,false);
 			}
 			if(colorTriangle[i]=="orange"){
-				showOrHideTriangle(i,false);
+				hideTriangle(i,false);
 			}
 			if(colorRectangle[i]=="orange"){
-				showOrHideRectangle(i,false);
+				hideRectangle(i,false);
 			}
 		}
 	}
 	else{
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(colorSquare[i]=="orange"){
-				showOrHideSquare(i,true);
+				hideSquare(i,true);
 			}
 			if(colorCircle[i]=="orange"){
-				showOrHideCircle(i,true);
+				hideCircle(i,true);
 			}
 			if(colorTriangle[i]=="orange"){
-				showOrHideTriangle(i,true);
+				hideTriangle(i,true);
 			}
 			if(colorRectangle[i]=="orange"){
-				showOrHideRectangle(i,true);
+				hideRectangle(i,true);
 			}
 		}
 	}
 }
 
-/****************************************************************************************/
 function listAxisX(x,y,color,form){
-	for(i=0;i<10;i++){
+	for(i=0;i<size;i++){
 		if(listOrderedXAxisX[i]==null){
 			listOrderedXAxisX[i]=x;
 			listOrderedYAxisX[i]=y;
@@ -519,14 +505,14 @@ function listAxisX(x,y,color,form){
 }
 
 function orderAxisX(){
-	var j=9;
+	var j=size-1;
 	var tempX=0;
 	var tempY=0;
 	var tempColor=0;
 	var tempForm=0;
 
 	while(j>=0){
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(listOrderedXAxisX[i]>listOrderedXAxisX[i+1]){
 				tempX=listOrderedXAxisX[i];
 				tempY=listOrderedYAxisX[i];
@@ -573,42 +559,26 @@ function hideAxisX(i,hide){
 		fill="white";
 		stroke="white";
 	}else{
-		fill=listOrderedColorAxisY[i];
-		stroke="black";
+		fill=listOrderedColorAxisX[i];
+		stroke=listOrderedColorAxisX[i];
 	}
 	
 	if(listOrderedFormAxisX[i]==0){
-		var quadrado=document.getElementById("screenForms").getContext("2d");
-		quadrado.fillStyle=fill;
-		quadrado.fillRect(listOrderedXAxisX[i],listOrderedYAxisX[i],20,20);
+		generateSquare(listOrderedXAxisX[i],listOrderedYAxisX[i], fill);
 	}
 	if(listOrderedFormAxisX[i]==1){
-		var circulo=document.getElementById("screenForms").getContext("2d");
-		circulo.fillStyle=fill;
-		circulo.strokeStyle=stroke;
-		circulo.beginPath();
-		circulo.arc(listOrderedXAxisX[i],listOrderedYAxisX[i],10,0,Math.PI*2);
-		circulo.fill();
+		generateCircle(listOrderedXAxisX[i],listOrderedYAxisX[i], fill, stroke);
 	}
 	if(listOrderedFormAxisX[i]==2){
-		var triangulo=document.getElementById("screenForms").getContext("2d");
-		triangulo.fillStyle=fill;
-		triangulo.strokeStyle=stroke;
-		triangulo.beginPath();
-		triangulo.moveTo(listOrderedXAxisX[i],listOrderedYAxisX[i]);
-		triangulo.lineTo(listOrderedXAxisX[i]+20,listOrderedYAxisX[i]);
-		triangulo.lineTo(listOrderedXAxisX[i]+10,listOrderedYAxisX[i]-20);
-		triangulo.fill();	
+		generateTriangle(listOrderedXAxisX[i],listOrderedYAxisX[i], fill, stroke);
 	}
 	if(listOrderedFormAxisX[i]==3){
-		var retangulo=document.getElementById("screenForms").getContext("2d");
-		retangulo.fillStyle=fill;
-		retangulo.fillRect(listOrderedXAxisX[i],listOrderedYAxisX[i],30,20);		
+		generateRectangle(listOrderedXAxisX[i],listOrderedYAxisX[i], fill);
 	}
 }
 
 function listAxisY(x,y,color,form){
-	for(i=0;i<10;i++){
+	for(i=0;i<size;i++){
 		if(listOrderedYAxisY[i]==null){
 			listOrderedXAxisY[i]=x;
 			listOrderedYAxisY[i]=y;
@@ -620,14 +590,14 @@ function listAxisY(x,y,color,form){
 }
 
 function orderAxisY(){
-	var j=9;
+	var j=size-1;
 	var tempX=0;
 	var tempY=0;
 	var tempColor=0;
 	var tempForm=0;
 
 	while(j>=0){
-		for(i=0;i<10;i++){
+		for(i=0;i<size;i++){
 			if(listOrderedYAxisY[i]<listOrderedYAxisY[i+1]){
 				tempX=listOrderedXAxisY[i];
 				tempY=listOrderedYAxisY[i];
@@ -675,35 +645,20 @@ function hideAxisY(i,hide){
 		stroke="white";
 	}else{
 		fill=listOrderedColorAxisY[i];
-		stroke="black";
+		stroke=listOrderedColorAxisY[i];
 	}
 	
 	if(listOrderedFormAxisY[i]==0){
-		var quadrado=document.getElementById("screenForms").getContext("2d");
-		quadrado.fillStyle=fill;
-		quadrado.fillRect(listOrderedXAxisY[i],listOrderedYAxisY[i],20,20);
+		generateSquare(listOrderedXAxisY[i],listOrderedYAxisY[i], fill);
 	}
 	if(listOrderedFormAxisY[i]==1){
-		var circulo=document.getElementById("screenForms").getContext("2d");
-		circulo.fillStyle=fill;
-		circulo.strokeStyle=stroke;
-		circulo.beginPath();
-		circulo.arc(listOrderedXAxisY[i],listOrderedYAxisY[i],10,0,Math.PI*2);
-		circulo.fill();
+		generateCircle(listOrderedXAxisY[i],listOrderedYAxisY[i], fill, stroke);
 	}
 	if(listOrderedFormAxisY[i]==2){
-		var triangulo=document.getElementById("screenForms").getContext("2d");
-		triangulo.fillStyle=fill;
-		triangulo.strokeStyle=stroke;
-		triangulo.beginPath();
-		triangulo.moveTo(listOrderedXAxisY[i],listOrderedYAxisY[i]);
-		triangulo.lineTo(listOrderedXAxisY[i]+20,listOrderedYAxisY[i]);
-		triangulo.lineTo(listOrderedXAxisY[i]+10,listOrderedYAxisY[i]-20);
-		triangulo.fill();	
+		generateTriangle(listOrderedXAxisY[i],listOrderedYAxisY[i], fill, stroke);
 	}
 	if(listOrderedFormAxisY[i]==3){
-		var retangulo=document.getElementById("screenForms").getContext("2d");
-		retangulo.fillStyle=fill;
-		retangulo.fillRect(listOrderedXAxisY[i],listOrderedYAxisY[i],30,20);		
+		generateRectangle(listOrderedXAxisY[i],listOrderedYAxisY[i], fill);
 	}
 }
+
