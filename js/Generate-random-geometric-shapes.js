@@ -352,143 +352,56 @@ function hideTriangle(i,hide){
 	generateTriangle(xCoordinateTriangle[i],yCoordinateTriangle[i], fill, stroke);
 }
 
+function hideColor(color,hide){
+		for(i=0;i<size;i++){
+			if(colorSquare[i]==color){
+				hideSquare(i,hide);
+			}
+			if(colorCircle[i]==color){
+				hideCircle(i,hide);
+			}
+			if(colorTriangle[i]==color){
+				hideTriangle(i,hide);
+			}
+			if(colorRectangle[i]==color){
+				hideRectangle(i,hide);
+			}
+		}
+}
+
 function showOrHideBlue(){
 	if(document.getElementsByName("checkboxColor")[0].checked==true){
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="blue"){
-				hideSquare(i,false);
-			}
-			if(colorCircle[i]=="blue"){
-				hideCircle(i,false);
-			}
-			if(colorTriangle[i]=="blue"){
-				hideTriangle(i,false);
-			}
-			if(colorRectangle[i]=="blue"){
-				hideRectangle(i,false);
-			}
-		}
+		hideColor("blue",false);
 	}
 	else{
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="blue"){
-				hideSquare(i,true);
-			}
-			if(colorCircle[i]=="blue"){
-				hideCircle(i,true);
-			}
-			if(colorTriangle[i]=="blue"){
-				hideTriangle(i,true);
-			}
-			if(colorRectangle[i]=="blue"){
-				hideRectangle(i,true);
-			}
-		}
+		hideColor("blue",true);
 	}
 }
 
 function showOrHideGreen(){
 	if(document.getElementsByName("checkboxColor")[1].checked==true){
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="green"){
-				hideSquare(i,false);
-			}
-			if(colorCircle[i]=="green"){
-				hideCircle(i,false);
-			}
-			if(colorTriangle[i]=="green"){
-				hideTriangle(i,false);
-			}
-			if(colorRectangle[i]=="green"){
-				hideRectangle(i,false);
-			}
-		}
+		hideColor("green",false);
 	}
 	else{
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="green"){
-				hideSquare(i,true);
-			}
-			if(colorCircle[i]=="green"){
-				hideCircle(i,true);
-			}
-			if(colorTriangle[i]=="green"){
-				hideTriangle(i,true);
-			}
-			if(colorRectangle[i]=="green"){
-				hideRectangle(i,true);
-			}
-		}
+		hideColor("green",true);
 	}
 }
 
 function showOrHideRed(){
 	if(document.getElementsByName("checkboxColor")[2].checked==true){
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="red"){
-				hideSquare(i,false);
-			}
-			if(colorCircle[i]=="red"){
-				hideCircle(i,false);
-			}
-			if(colorTriangle[i]=="red"){
-				hideTriangle(i,false);
-			}
-			if(colorRectangle[i]=="red"){
-				hideRectangle(i,false);
-			}
-		}
+		hideColor("red",false);
 	}
 	else{
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="red"){
-				hideSquare(i,true);
-			}
-			if(colorCircle[i]=="red"){
-				hideCircle(i,true);
-			}
-			if(colorTriangle[i]=="red"){
-				hideTriangle(i,true);
-			}
-			if(colorRectangle[i]=="red"){
-				hideRectangle(i,true);
-			}
-		}
+		hideColor("red",true);
 	}
 }
 
 function showOrHideOrange(){
 	if(document.getElementsByName("checkboxColor")[3].checked==true){
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="orange"){
-				hideSquare(i,false);
-			}
-			if(colorCircle[i]=="orange"){
-				hideCircle(i,false);
-			}
-			if(colorTriangle[i]=="orange"){
-				hideTriangle(i,false);
-			}
-			if(colorRectangle[i]=="orange"){
-				hideRectangle(i,false);
-			}
-		}
+		hideColor("orange",false);
 	}
 	else{
-		for(i=0;i<size;i++){
-			if(colorSquare[i]=="orange"){
-				hideSquare(i,true);
-			}
-			if(colorCircle[i]=="orange"){
-				hideCircle(i,true);
-			}
-			if(colorTriangle[i]=="orange"){
-				hideTriangle(i,true);
-			}
-			if(colorRectangle[i]=="orange"){
-				hideRectangle(i,true);
-			}
-		}
+		hideColor("orange",true);
 	}
 }
 
