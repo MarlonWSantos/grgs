@@ -3,51 +3,201 @@
 <head>
 <meta charset="UTF-8">
 <title>Generate-random-geometric-shapes</title>
-<script type="text/javascript" src="js/Generate-random-geometric-shapes.js"></script>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<style type="text/css">
+.container{
+    width:80%;
+    padding-right:var(--bs-gutter-x,.75rem);
+    padding-left:var(--bs-gutter-x,.75rem);
+    margin-right:auto;
+    margin-left:auto
+}
+
+</style>
+
 </head>
 <body>
 
+	<div class="container my-3">
+		<div class="row">
+			
+				<canvas id="screenForms" width="780" height="520"
+					style="border: 2px solid #000000;"></canvas>
+		
+		</div>
 
-<table>
-<tr valign="top"><td><canvas id="screenForms" width="520" height="520" style="border:1px solid #000000;"></canvas></td>
-<td>
-<table>
-<tr><td align="center" valign="top"><canvas  id="screenCoordinates"  width="90" height="150" style="border:1px solid #000000;"></canvas></td></tr>
-<tr><td align="center" ><input name="ButtonGenerate" type = "BUTTON" OnClick="start()" value="Gerar" /></td></tr>
-<tr><td><table border="1">
-<tr><td align="center">Filtro por Formas</td></tr>
-<tr><td><input type="checkbox" name="checkboxForms" onClick="showOrHideSquare();">Quadrado</td></tr>
-<tr><td><input type="checkbox" name="checkboxForms" onClick="showOrHideTriangle();">Triângulo</td></tr>
-<tr><td><input type="checkbox" name="checkboxForms" onClick="showOrHideRectangle();">Retângulo</td></tr>
-<tr><td><input type="checkbox" name="checkboxForms" onClick="showOrHideCircle();">Círculo</td></tr>
-</table>
-</td>
-</tr> 
-<tr><td></td></tr>
-<tr><td><table border="1">
-<tr><td align="center">Filtro por Cores</td></tr>   
-<tr><td><input type="checkbox" name="checkboxColor" onClick="showOrHideBlue();">Azul</td></tr>   
-<tr><td><input type="checkbox" name="checkboxColor" onClick="showOrHideGreen();">Verde</td></tr>  
-<tr><td><input type="checkbox" name="checkboxColor" onClick="showOrHideRed();">Vermelho</td></tr>      
-<tr><td><input type="checkbox" name="checkboxColor" onClick="showOrHideOrange();">Laranja</td></tr>      
-</table>
-</td>
-</tr>
-</table>
-</td>
-</tr>
-</table>
+		<div class="row align-items-center col-form-label-lg">
+			<div class="col-3">
+				<table class="table table-dark table-hover">
+					<tr>
+						<td class="align-content-center">Filtro por Formas</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxSquare"
+									type="checkbox" name="checkboxForms" disabled="disabled"
+									onClick="showOrHideSquare();"> <label
+									class="form-check-label" for="checkboxSquare" id=labelSquare>Quadrado</label>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxTriangle"
+									type="checkbox" name="checkboxForms" disabled="disabled"
+									onClick="showOrHideTriangle();"> <label
+									class="form-check-label" for="checkboxTriangle"
+									id=labelTriangle>Triângulo</label>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxRectangle"
+									type="checkbox" name="checkboxForms" disabled="disabled"
+									onClick="showOrHideRectangle();"> <label
+									class="form-check-label" for="checkboxRectangle" id=labelCircle>Retângulo</label>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxCircle"
+									name="checkboxForms" disabled="disabled" type="checkbox"
+									onClick="showOrHideCircle();"> <label
+									class="form-check-label" for="checkboxCircle" id="labelCircle">Círculo</label>
+							</div>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+
+			<div class="col-3">
+				<table class="table table-dark table-hover">
+					<tr>
+						<td class="align-content-center">Filtro por Cores</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxBlue"
+									type="checkbox" name="checkboxColor" disabled="disabled"
+									onClick="showOrHideBlue();"> <label
+									class="form-check-label" for="checkboxBlue" id=labelBlue>Azul</label>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxGreen"
+									type="checkbox" name="checkboxColor" disabled="disabled"
+									onClick="showOrHideGreen();"> <label
+									class="form-check-label" for="checkboxGreen" id=labelGreen>Verde</label>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxRed" type="checkbox"
+									name="checkboxColor" disabled="disabled"
+									onClick="showOrHideRed();"> <label
+									class="form-check-label" for="checkboxRed" id=labelRed>Vermelho</label>
+							</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td>
+							<div>
+								<input class="form-check-input" id="checkboxOrange"
+									type="checkbox" name="checkboxColor" disabled="disabled"
+									onClick="showOrHideOrange();"> <label
+									class="form-check-label" for="checkboxOrange" id=labelOrange>Laranja</label>
+							</div>
+						</td>
+					</tr>
 
 
-<label for="range">Eixo X: </label>
-0<input type="range" name="slideAxisX" id="slideX" min="-1" max="9" value="-1" onMouseMove="sliderX(value);" onChange="sliderX(value);">500
+				</table>
 
-<p></p>
+			</div>
 
-<label for="range">Eixo Y: </label> 
-0<input type="range" name="slideAxisY" id="slideY" min="-1" max="9" value="-1" onMouseMove="sliderY(value);" onChange="sliderY(value);">500
+			<div class="col-4">
 
-<script>init()</script>
+				<div class="row my-5">
 
+					<div class="col-1">
+						<label for="sliderX" class="form-label">0</label>
+					</div>
+
+					<div class="col-8">
+						<input type="range" class="form-range" id="sliderX"
+							name="sliderAxis" disabled="disabled" min="-1" max="9" value="-1"
+							onMouseMove="sliderX(value);" onChange="sliderX(value);">
+					</div>
+
+					<div class="col-1">
+						<label for="sliderX" class="form-label">750</label>
+					</div>
+
+				</div>
+
+				<div class="row my-5">
+
+					<div class="col-1">
+						<label for="sliderY" class="form-label">0</label>
+					</div>
+
+					<div class="col-8">
+						<input type="range" class="form-range" id="sliderY"
+							name="sliderAxis" disabled="disabled" min="-1" max="9" value="-1"
+							onMouseMove="sliderY(value);" onChange="sliderY(value);">
+					</div>
+
+					<div class="col-1">
+						<label for="sliderY" class="form-label">750</label>
+					</div>
+				</div>
+			</div>
+			
+
+			<div class="col-2">
+				<div class="row pb-2">
+					<canvas id="screenCoordinates" width="90" height="150"
+						style="border: 1px solid #000000;"></canvas>
+				</div>
+
+				<div class="row">
+					<input class="btn-primary" name="buttonGenerate" type="button"
+						OnClick="start()" value="Clique aqui" />
+				</div>
+			</div>
+
+		</div>
+
+		<script type="text/javascript" src="js/init.js"></script>
+		<script type="text/javascript" src="js/generate-random-geometric-shapes.js"></script>
+		<script type="text/javascript" src="js/forms.js"></script>
+					
+		<script src="js/bootstrap.bundle.min.js"></script>
+		
+		<script>init()</script>		
+		
 </body>
 </html>
